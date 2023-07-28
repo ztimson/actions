@@ -1,45 +1,39 @@
-name: Build & push docker image
+name: Push docker image
+description: Build the local docker file & push to the registry
 
-on:
-  workflow_call:
-    inputs:
-      registry:
-        required: false
-        type: string
-      image:
-        required: true
-        type: string
-      tag:
-        required: false
-        type: string
-    secrets:
-      registry_user:
-        required: true
-        type: string
-      registry_pass:
-        required: true
-        type: string
+inputs:
+  registry:
+    required: false
+    type: string
+  image:
+    required: true
+    type: string
+  tag:
+    required: false
+    type: string
+secrets:
+  registry_user:
+    required: true
+    type: string
+  registry_pass:
+    required: true
+    type: string
 
-jobs:
-  build:
-    name: Build & push docker image
-    runs-on: Docker
-    container:
-      image: docker:latest
-    steps:
+runs:
+  using: composite
+  steps:
+    - name: Login to registry
+      run: |
+        REGISTRY=$([ -n "${{inputs.registry}}" ] && echo "${{inputs.registry}}" || echo "$GITHUB_SERVER_URL")
+        echo "${{secrets.registry_pass}}" | docker login -u "${{secrets.registry_user}}" --password-stdin "$REGISTRY"    
 
-      - name: Login to registry
-        run: |
-          REGISTRY=$([ "${{inputs.registry}}" -n ] && echo "${{inputs.registry}}" || echo "$GITHUB_SERVER_URL")
-          echo "${{secrets.registry_pass}}" | docker login -u "${{secrets.registry_user}}" --password-stdin "$REGISTRY"    
+    - uses: actions/checkout@v3
 
-      - uses: actions/checkout@v3
+    - name: Create tag
+      run: TAG=$([ -n "${{inputs.tag}}" ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g")
 
-      - name: Create tag
-        run: TAG=$([ "${{inputs.tag}}" -n ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g")
+    - name: Build image
+      run: docker build --no-cache -t "${{inputs.image}}:$TAG" .
 
-      - name: Build image
-        run: docker build --no-cache -t "${{inputs.image}}:$TAG" .
-
-      - name: Push image
-        run: docker push "${{inputs.image}}:$TAG"
+    - name: Push image
+      run: docker push "${{inputs.image}}:$TAG"
