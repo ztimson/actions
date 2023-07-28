@@ -25,7 +25,7 @@ jobs:
     name: Build & push docker image
     runs-on: Docker
     container:
-      image: node:16
+      image: docker:latest
     steps:
 
       - name: Login to registry
