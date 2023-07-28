@@ -24,7 +24,7 @@ runs:
 
     - name: Login to registry
       run: |
-        REGISTRY=$([ -n "${{inputs.registry}}" ] && echo "${{inputs.registry}}" || echo "$GITHUB_SERVER_URL")
+        REGISTRY=$([ -n "${{inputs.registry}}" ] && echo "${{inputs.registry}}" || echo "$GITHUB_SERVER_URL") \
         echo "${{inputs.registry_pass}}" | docker login -u "${{inputs.registry_user}}" --password-stdin "$REGISTRY"    
 
     - uses: actions/checkout@v3
