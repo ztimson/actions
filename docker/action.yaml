@@ -31,7 +31,7 @@ runs:
       run: echo "${{inputs.registry_pass}}" | docker login -u "${{inputs.registry_user}}" --password-stdin "${{inputs.registry}}"    
 
     - name: Create tag
-      run: TAG=$([ -n "${{inputs.tag}}" ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g")
+      run: TAG=$([ -n "${{inputs.tag}}" ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g") >> $GITHUB_ENV
 
     - name: Build image
       run: docker build --no-cache -t "${{inputs.image}}:$TAG" .
