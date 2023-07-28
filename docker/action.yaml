@@ -22,6 +22,10 @@ secrets:
 runs:
   using: composite
   steps:
+
+    - name: Install docker
+      run: curl -fsSL https://get.docker.com | sh
+
     - name: Login to registry
       run: |
         REGISTRY=$([ -n "${{inputs.registry}}" ] && echo "${{inputs.registry}}" || echo "$GITHUB_SERVER_URL")
