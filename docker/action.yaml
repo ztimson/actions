@@ -21,7 +21,6 @@ secrets:
 
 runs:
   using: composite
-  shell: sh
   steps:
     - name: Login to registry
       run: |
