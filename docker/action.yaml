@@ -34,7 +34,11 @@ runs:
       run: TAG=$([ -n "${{inputs.tag}}" ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g") >> $GITHUB_ENV
 
     - name: Build image
-      run: docker build --no-cache -t "${{inputs.image}}:$TAG" .
+      run: |
+        TAG=$([ -n "${{inputs.tag}}" ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g")
+        docker build --no-cache -t "${{inputs.image}}:$TAG" .
 
     - name: Push image
-      run: docker push "${{inputs.image}}:$TAG"
+      run: |
+        TAG=$([ -n "${{inputs.tag}}" ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g")
+        docker push "${{inputs.image}}:$TAG"
