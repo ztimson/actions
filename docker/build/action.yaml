@@ -1,0 +1,19 @@
+name: Build docker image
+
+inputs:
+  image:
+    required: true
+    type: string
+    default: $GITHUB_REPOSITORY
+  tag:
+    required: false
+    type: string
+
+runs:
+  using: composite
+  steps:
+
+    - name: Build image
+      run: |
+        TAG=$([ -n "${{inputs.tag}}" ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g")
+        docker build --no-cache -t "${{inputs.image}}:$TAG" .
