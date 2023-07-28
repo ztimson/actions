@@ -23,11 +23,6 @@ runs:
   using: composite
   steps:
 
-    - name: Install docker
-      run: |
-        apt update && apt install curl -y
-        curl -fsSL https://get.docker.com | sh || echo "Success!"
-
     - name: Login to registry
       run: |
         REGISTRY=$([ -n "${{inputs.registry}}" ] && echo "${{inputs.registry}}" || echo "$GITHUB_SERVER_URL")
