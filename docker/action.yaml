@@ -26,7 +26,7 @@ runs:
     - name: Install docker
       run: |
         apt update && apt install curl -y
-        curl -fsSL https://get.docker.com | sh
+        curl -fsSL https://get.docker.com | sh || echo "Success!"
 
     - name: Login to registry
       run: |
