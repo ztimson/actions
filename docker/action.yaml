@@ -5,18 +5,17 @@ inputs:
   registry:
     required: false
     type: string
-  image:
-    required: true
-    type: string
-  tag:
-    required: false
-    type: string
-secrets:
   registry_user:
     required: true
     type: string
   registry_pass:
     required: true
+    type: string
+  image:
+    required: true
+    type: string
+  tag:
+    required: false
     type: string
 
 runs:
@@ -26,7 +25,7 @@ runs:
     - name: Login to registry
       run: |
         REGISTRY=$([ -n "${{inputs.registry}}" ] && echo "${{inputs.registry}}" || echo "$GITHUB_SERVER_URL")
-        echo "${{secrets.registry_pass}}" | docker login -u "${{secrets.registry_user}}" --password-stdin "$REGISTRY"    
+        echo "${{inputs.registry_pass}}" | docker login -u "${{inputs.registry_user}}" --password-stdin "$REGISTRY"    
 
     - uses: actions/checkout@v3
 
