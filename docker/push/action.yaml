@@ -8,12 +8,12 @@ inputs:
   registry_user:
     required: false
     type: string
-    default: $GITHUB_ACTOR
+    default: $GITHUB_REPOSITORY_OWNER
   registry_pass:
     required: true
     type: string
   image:
-    required: true
+    required: false
     type: string
     default: $GITHUB_REPOSITORY
   tag:
