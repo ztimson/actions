@@ -18,6 +18,6 @@ runs:
       - /mnt/swarm/gitea/runner/cache:/cache
   steps:
     - run: |
-        tar -czf "${{ inputs.out }}" ${{ inputs.pattern }}
+        tar -czf "archive.tar.gz" ${{ inputs.pattern }}
         mkdir -p "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}"
-        mv "${{ inputs.out }}" "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/"
+        mv "archive.tar.gz" "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/"
