@@ -15,4 +15,4 @@ runs:
   container: alpine
   steps:
     - run: |
-        tar -czf archive.tar,gz ${{ inputs.pattern }}
+        tar -czf "${{ inputs.out }}" ${{ inputs.pattern }}
