@@ -8,6 +8,4 @@ runs:
     - name: Checkout repository
       uses: docker://alpine/git:latest
       with:
-        args: |
-          -v $GITHUB_WORKSPACE:/root
-          clone --branch "$GITHUB_REF_NAME" "https://$GITHUB_TOKEN@$(echo \"$GITHUB_SERVER_URL\" | sed 's%https://%%')/$GITHUB_REPOSITORY.git" .
+        args: -v $GITHUB_WORKSPACE:/root clone "https://$GITHUB_TOKEN@$(echo \"$GITHUB_SERVER_URL\" | sed 's%https://%%')/$GITHUB_REPOSITORY.git" .
