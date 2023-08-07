@@ -15,7 +15,7 @@ runs:
   container:
     image: alpine
     volumes:
-      - /cache:/cache
+      - /mnt/cache:/cache
   steps:
     - run: |
         tar -czf "archive.tar.gz" ${{ inputs.pattern }}
