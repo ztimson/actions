@@ -12,7 +12,7 @@ runs:
   container:
     image: alpine
     volumes:
-      - /mnt/swarm/gitea/runner/cache:/cache
+      - /cache:/cache
   steps:
     - run: |
         mv "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz" . && \
