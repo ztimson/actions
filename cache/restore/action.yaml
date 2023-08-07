@@ -15,6 +15,7 @@ runs:
       - /mnt/swarm/gitea/runner/cache:/cache
   steps:
     - run: |
-        mv "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz" . && \
-        tar -xzf "archive.tar.gz" || \
-        echo "Cache not found"
+        mv "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz" . || echo "Cache not found" && exit
+        tar -xzf "archive.tar.gz"
+        echo "Cache restored: /cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
+        
