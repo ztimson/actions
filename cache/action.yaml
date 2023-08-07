@@ -1,5 +1,5 @@
-name: Compress Files
-desciption: Compress files into a gziped archive
+name: Cache Files
+desciption: Compress and cache files for later
 
 inputs:
   key:
