@@ -9,7 +9,7 @@ runs:
       uses: addnab/docker-run-action@v3
       with:
         image: alpine/git:latest
-        options: -v /cache/${{ github.workspace }}:/git
+        options: -v /mnt/swarm/gitea/runner/cache/${{ github.workspace }}:/git
         run: |
           HOST=$(echo "${{ github.server_url }}" | sed 's%https://%%')
           git clone -b "${{ github.ref_name  }}" "https://${{ github.token }}@$HOST/${{ github.repository }}.git" .
