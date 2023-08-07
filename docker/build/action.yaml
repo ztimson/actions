@@ -15,8 +15,8 @@ inputs:
 
 runs:
   using: composite
+  container: docker
   steps:
-
     - name: Build image
       run: |
         TAG=$([ -n "${{inputs.tag}}" ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g")
