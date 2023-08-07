@@ -15,4 +15,4 @@ runs:
   container: alpine
   steps:
     - run: |
-        tar -czvf archive.tar,gz $(find . -type f -name "${{ inputs.pattern }}" )
+        tar -czvf archive.tar,gz $(find . -type f -wholename "${{ inputs.pattern }}" )
