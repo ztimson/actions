@@ -8,5 +8,3 @@ runs:
     - run: |
         $TAG=$(git describe --tags)
         echo "$TAG"
-        git tag -f "$TAG" "$GITHUB_SHA"
-        git push -f origin "$TAG"
