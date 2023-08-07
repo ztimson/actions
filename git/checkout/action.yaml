@@ -3,8 +3,9 @@ desciption: Checkout repository using alpite/git
 
 runs:
   using: composite
-    steps:
-      - run: |
-          HOST=$(echo "$GITHUB_SERVER_URL" | sed 's%https://%%')
-          URL="https://$GITHUB_TOKEN@$HOST/$GITHUB_REPOSITORY.git"
-          git clone -b "$GITHUB_REF_NAME" "$URL" .
+  container: alpine/git
+  steps:
+    - run: |
+        HOST=$(echo "$GITHUB_SERVER_URL" | sed 's%https://%%')
+        URL="https://$GITHUB_TOKEN@$HOST/$GITHUB_REPOSITORY.git"
+        git clone -b "$GITHUB_REF_NAME" "$URL" .
