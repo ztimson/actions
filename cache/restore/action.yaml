@@ -16,5 +16,5 @@ runs:
   steps:
     - run: |
         [ ! -f "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz" ] && echo "Cache not found" && exit
-        tar -xzf "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
+        tar --overwrite -xzf "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
         echo "Cache restored: /cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
