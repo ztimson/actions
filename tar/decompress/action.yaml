@@ -1,0 +1,15 @@
+name: Deompress Files
+desciption: Deompress files from a gziped archive
+
+inputs:
+  file:
+    requried: false
+    type: string
+    default: archive.tar.gz
+
+runs:
+  using: composite
+  container: alpine
+  steps:
+    - run: |
+        tar -xzf archive.tar,gz
