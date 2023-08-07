@@ -10,4 +10,4 @@ runs:
       with:
         args: |
           -v $GITHUB_WORKSPACE:/root
-          git clone -b "$GITHUB_REF_NAME" "https://$GITHUB_TOKEN@$(echo "$GITHUB_SERVER_URL" | sed 's%https://%%')/$GITHUB_REPOSITORY.git" .
+          git clone --branch "$GITHUB_REF_NAME" "https://$GITHUB_TOKEN@$(echo "$GITHUB_SERVER_URL" | sed 's%https://%%')/$GITHUB_REPOSITORY.git" .
