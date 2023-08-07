@@ -6,9 +6,6 @@ inputs:
     required: true
     type: string
     default: default
-  pattern:
-    required: true
-    type: string
 
 runs:
   using: composite
