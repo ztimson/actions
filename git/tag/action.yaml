@@ -6,7 +6,7 @@ runs:
   container: alpine/git
   steps:
     - run: |
-        $TAG=$(git describe)
+        $TAG=$(git describe --tags)
         echo "$TAG"
         git tag -f "$TAG" "$GITHUB_SHA"
         git push -f origin "$TAG"
