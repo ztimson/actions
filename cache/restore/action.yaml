@@ -12,7 +12,7 @@ runs:
   container:
     image: alpine
     volumes:
-      - /cache:/cache
+      - /mnt/cache:/cache
   steps:
     - run: |
         mv "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz" . && \
