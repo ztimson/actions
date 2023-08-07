@@ -22,3 +22,4 @@ runs:
         mkdir -p "/mnt/cache/$GITHUB_REPOSITORY/${{ inputs.key }}"
         ARCHIVE="/mnt/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
         [[ ! -f "$ARCHIVE" || "$(md5sum "$ARCHIVE")" != "$(md5sum archive.tar.gz)" ]] && mv archive.tar.gz "$ARCHIVE"
+        echo "Created cache: $ARCHIVE"
