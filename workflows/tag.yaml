@@ -1,10 +1,16 @@
 name: Tag Repository
-on: push
+
+on:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
 
 jobs:
   tag:
     name: Tag Repository
-    if: $GITHUB_REF_NAME == 'develop'
+    if: $GITHUB_REF_NAME == "${{ inputs.branch }}"
     runs-on: ubuntu-latest
     steps:
       - uses: ztimson/actions/git/checkout@develop
