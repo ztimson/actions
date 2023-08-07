@@ -12,7 +12,7 @@ inputs:
 
 runs:
   using: composite
-  container: alpine/git
+  container: alpine
   steps:
     - run: |
         tar -czvf archive.tar,gz $(find . -type f -name "${{ inputs.pattern }}" )
