@@ -12,9 +12,9 @@ runs:
   container:
     image: alpine
     volumes:
-      - /mnt/cache:/mnt/cache
+      - /mnt/swarm/gitea/runner/cache:/cache
   steps:
     - run: |
-        mv "/mnt/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz" . && \
+        mv "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz" . && \
         tar -xzf "archive.tar.gz" || \
         echo "Cache not found"
