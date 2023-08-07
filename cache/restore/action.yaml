@@ -1,0 +1,22 @@
+name: Restore Cache
+desciption: Restore cached files
+
+inputs:
+  key:
+    required: true
+    type: string
+    default: default
+  pattern:
+    required: true
+    type: string
+
+runs:
+  using: composite
+  container:
+    image: alpine
+    volumes:
+      - /mnt/swarm/gitea/runner/cache:/cache
+  steps:
+    - run: |
+        mv "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz" .
+        tar -xzf "archive.tar.gz"
