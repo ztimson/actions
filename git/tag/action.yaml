@@ -6,5 +6,5 @@ runs:
   container: alpine/git
   steps:
     - run: |
-        $TAG=$(git describe --tags)
+        $TAG=$(git describe)
         echo "$TAG"
