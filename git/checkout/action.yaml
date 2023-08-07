@@ -12,6 +12,5 @@ runs:
         options: -v ${{ github.workspace }}:/git
         run: |
           HOST=$(echo "${{ github.server_url }}" | sed 's%https://%%')
-          URL="https://${{ github.token }}@$HOST/${{ github.repository }}.git"
-          git clone -b "${{ github.ref_name  }}" "$URL" .
-          git status && ls
+          git clone -b "${{ github.ref_name  }}" "https://${{ github.token }}@$HOST/${{ github.repository }}.git" .
+          git status && echo "" && ls
