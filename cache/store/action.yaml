@@ -20,4 +20,4 @@ runs:
     - run: |
         tar -czf "archive.tar.gz" ${{ inputs.pattern }}
         mkdir -p "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}"
-        mv "archive.tar.gz" "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/"
+        [ $(md5sum "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz") != $(md5sum archive.tar.gz) ] && mv archive.tar.gz "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/"
