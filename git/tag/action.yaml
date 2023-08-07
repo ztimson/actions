@@ -6,7 +6,6 @@ runs:
   container: alpine/git
   steps:
     - run: |
-        $TAG=$(cat package.json | grep version | grep -Eo ':.+' | grep -Eo '[[:alnum:]\.\/\-]+')
-        [ -z "$TAG" ] && TAG=$(git describe)
+        $TAG=$($(cat package.json || git describe) | grep version | grep -Eo ':.+' | grep -Eo '[[:alnum:]\.\/\-]+')
         git tag -f "$TAG" "$GITHUB_SHA"
         git push -f origin "$TAG"
