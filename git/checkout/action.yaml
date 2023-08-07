@@ -9,7 +9,7 @@ runs:
       uses: addnab/docker-run-action@v3
       with:
         image: alpine/git:latest
-        options: -v $GITHUB_WORKSPACE:/root
+        options: -v ${{ github.workspace }}:/root
         run: |
           HOST=$(echo "$GITHUB_SERVER_URL" | sed 's%https://%%')
           URL="https://$GITHUB_TOKEN@$HOST/$GITHUB_REPOSITORY.git"
