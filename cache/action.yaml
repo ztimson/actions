@@ -15,11 +15,11 @@ runs:
   container:
     image: alpine
     volumes:
-      - /mnt/cache:/mnt/cache
+      - /mnt/swarm/gitea/runner/cache:/cache
   steps:
     - run: |
         tar -czf "archive.tar.gz" ${{ inputs.pattern }}
-        mkdir -p "/mnt/cache/$GITHUB_REPOSITORY/${{ inputs.key }}"
-        ARCHIVE="/mnt/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
+        mkdir -p "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}"
+        ARCHIVE="/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
         [[ ! -f "$ARCHIVE" || "$(md5sum "$ARCHIVE")" != "$(md5sum archive.tar.gz)" ]] && mv archive.tar.gz "$ARCHIVE"
         echo "Created cache: $ARCHIVE"
