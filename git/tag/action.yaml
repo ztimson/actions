@@ -1,0 +1,12 @@
+name: Git Tag
+desciption: Tag commit with version number
+
+runs:
+  using: composite
+  container: alpine/git
+  steps:
+    - run: |
+        $TAG=$(cat package.json | grep version | grep -Eo ':.+' | grep -Eo '[[:alnum:]\.\/\-]+')
+        [ -z "$TAG" ] && TAG=$(git describe)
+        git tag -f "$TAG" "$GITHUB_SHA"
+        git push -f origin "$TAG"
