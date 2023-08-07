@@ -12,5 +12,5 @@ runs:
         options: -v ${{ github.workspace }}:/root
         run: |
           HOST=$(echo "${{ github.server_url }}" | sed 's%https://%%')
-          URL="https://$GITHUB_TOKEN@$HOST/$GITHUB_REPOSITORY.git"
-          git clone -b "$GITHUB_REF_NAME" "$URL" .
+          URL="https://${{ github.token }}@$HOST/${{ github.repository }}.git"
+          git clone -b "${{ github.ref_name  }}" "$URL" .
