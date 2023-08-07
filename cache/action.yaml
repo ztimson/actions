@@ -15,10 +15,10 @@ runs:
   container:
     image: alpine
     volumes:
-      - /mnt/cache:/cache
+      - /mnt/cache:/mnt/cache
   steps:
     - run: |
         tar -czf "archive.tar.gz" ${{ inputs.pattern }}
-        mkdir -p "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}"
-        ARCHIVE="/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
+        mkdir -p "/mnt/cache/$GITHUB_REPOSITORY/${{ inputs.key }}"
+        ARCHIVE="/mnt/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
         [[ ! -f "$ARCHIVE" || "$(md5sum "$ARCHIVE")" != "$(md5sum archive.tar.gz)" ]] && mv archive.tar.gz "$ARCHIVE"
