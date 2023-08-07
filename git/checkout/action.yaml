@@ -6,6 +6,11 @@ runs:
   container: alpine/git
   steps:
     - name: Checkout repository
-      uses: docker://alpine/git:latest
+      uses: addnab/docker-run-action@v3
       with:
-        args: clone "https://$GITHUB_TOKEN@$(echo \"$GITHUB_SERVER_URL\" | sed \'s%https://%%\')/$GITHUB_REPOSITORY.git" .
+        image: alpine/git:latest
+        options: -v $GITHUB_WORKSPACE:/root
+        run: |
+          HOST=$(echo "$GITHUB_SERVER_URL" | sed 's%https://%%')
+          URL="https://$GITHUB_TOKEN@$HOST/$GITHUB_REPOSITORY.git"
+          git clone -b "$GITHUB_REF_NAME" "$URL" .
