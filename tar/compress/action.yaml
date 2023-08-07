@@ -1,0 +1,18 @@
+name: Compress Files
+desciption: Compress files into a gziped archive
+
+inputs:
+  pattern:
+    required: true
+    type: string
+  out:
+    requried: false
+    type: string
+    default: archive.tar.gz
+
+runs:
+  using: composite
+  container: alpine/git
+  steps:
+    - run: |
+        tar -czvf archive.tar,gz $(find . -type f -name ${{ inputs.pattern }} )
