@@ -1,0 +1,11 @@
+name: Tag Repository
+on: push
+
+jobs:
+  tag:
+    name: Tag Repository
+    if: $GITHUB_REF_NAME == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ztimson/actions/git/checkout@develop
+      - uses: ztimson/actions/git/tag@develop
