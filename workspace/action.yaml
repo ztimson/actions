@@ -1,9 +1,18 @@
 name: Load Workspace
 description: Switch to job's persistant workspace
 
+input:
+  key:
+    type: string
+    required: true
+    description: Workspace ID
+
 runs:
   using: composite
   steps:
     - run: |
-        mkdir -p /workspace/${{github.repository}}/${{github.job}}
-        cd /workspace/${{github.repository}}/${{github.job}}
+        WORKSPACE=$(pwd)
+        cd ..
+        rm -rf "$WORKSPACE"
+        mkdir -p "/workspace/${{inputs.key}}"
+        ln -s "/workspace/${{inputs.key}}" "$WORKSPACE"
