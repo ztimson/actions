@@ -1,8 +1,8 @@
-name: 'Load Workspace'
-description: 'Switch to job\'s persistant workspace'
+name: Load Workspace
+description: Switch to job's persistant workspace
 
 runs:
-  using: "composite"
+  using: composite
   steps:
     - run: |
         mkdir -p /workspace/${{github.repository}}/${{github.job}}
