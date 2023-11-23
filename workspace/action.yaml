@@ -1,11 +1,17 @@
 name: Link Workspace
 desciption: Connect persistant storage to workspace
 
+inputs:
+  key:
+    type: string
+    required: false
+    default: ${{ github.run_id }}
+
 runs:
   using: composite
   steps:
     - run: |
-        PERSISTANT="/cache/workspace/${{ github.run_id }}"
+        PERSISTANT="/cache/workspace/${{ inputs.key }}"
         mkdir -p "$PERSISTANT"
         WORKSPACE=$(pwd)
         cd ..
