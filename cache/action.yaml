@@ -9,13 +9,10 @@ inputs:
   pattern:
     required: true
     type: string
+    default: *
 
 runs:
   using: composite
-  container:
-    image: alpine
-    volumes:
-      - /mnt/swarm/gitea/runner/cache:/cache
   steps:
     - run: |
         mkdir -p "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}"
