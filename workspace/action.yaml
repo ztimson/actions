@@ -5,7 +5,7 @@ runs:
   using: composite
   steps:
     - run: |
-        PERSISTANT="/cache/workspace/${{ github.job }}"
+        PERSISTANT="/cache/workspace/${{ github.run_id }}"
         mkdir -p "$PERSISTANT"
         WORKSPACE=$(pwd)
         cd ..
