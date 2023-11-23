@@ -9,6 +9,7 @@ runs:
         mkdir -p "$PERSISTANT"
         WORKSPACE=$(pwd)
         cd ..
+        rm "$WORKSPACE"
         ln -fs "$PERSISTANT" "$WORKSPACE"
         echo "Linked: $PERSISTANT -> $WORKSPACE"
         echo "Workspace will be automatically deleted in 1 hour"
