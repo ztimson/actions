@@ -14,5 +14,6 @@ runs:
         WORKSPACE=$(pwd)
         cd ..
         rm -rf "$WORKSPACE"
+        mkdir -p "/cache/workspace/${{ inputs.key }}"
         ln -fs "/cache/workspace/${{ inputs.key }}" "$WORKSPACE"
         echo "Linked: /cache/workspace/${{ inputs.key }} -> $WORKSPACE"
