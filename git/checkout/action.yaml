@@ -6,11 +6,9 @@ runs:
   container: alpine/git
   steps:
     - name: Checkout repository
-      uses: addnab/docker-run-action@v3
-      with:
-        image: alpine/git:latest
-        options: -v /mnt/swarm/gitea/runner/cache/${{ github.workspace }}:/git
-        run: |
+      run: |
+          mkdir -p /tmp/workspace && mv * /tmp/workspace/
           HOST=$(echo "${{ github.server_url }}" | sed 's%https://%%')
           git clone -b "${{ github.ref_name  }}" "https://${{ github.token }}@$HOST/${{ github.repository }}.git" .
+          mv /tmp/workspace/* . && rm -rf /tmp/workspace
           git status && echo "" && ls
