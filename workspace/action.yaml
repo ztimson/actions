@@ -1,10 +1,11 @@
-name: Load Workspace
-description: Switch to job's persistant workspace
+name: Link Workspace
+desciption: Connect persistant storage to workspace
 
 inputs:
   key:
     required: true
     type: string
+    default: default
 
 runs:
   using: composite
