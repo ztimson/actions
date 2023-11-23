@@ -1,19 +1,15 @@
 name: Link Workspace
 desciption: Connect persistant storage to workspace
 
-inputs:
-  key:
-    required: true
-    type: string
-    default: default
-
 runs:
   using: composite
   steps:
     - run: |
+        PERSISTANT="/cache/workspace/${{ github.job }}"
+        mkdir -p "$PERSISTANT"
         WORKSPACE=$(pwd)
         cd ..
-        rm -rf "$WORKSPACE"
-        mkdir -p "/cache/workspace/${{ inputs.key }}"
-        ln -fs "/cache/workspace/${{ inputs.key }}" "$WORKSPACE"
-        echo "Linked: /cache/workspace/${{ inputs.key }} -> $WORKSPACE"
+        ln -fs "$PERSISTANT" "$WORKSPACE"
+        echo "Linked: $PERSISTANT -> $WORKSPACE"
+        echo "Workspace will be automatically deleted in 1 hour"
+        sleep 3600 && rm -rf "$PERSISTANT" &
