@@ -14,3 +14,4 @@ runs:
         echo "Linked: $PERSISTANT -> $WORKSPACE"
         echo "Workspace will be automatically deleted in 1 hour"
         sleep 3600 && rm -rf "$PERSISTANT" &
+      shell: sh
