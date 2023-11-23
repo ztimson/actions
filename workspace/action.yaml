@@ -12,5 +12,5 @@ runs:
     - run: |
         WORKSPACE=$(pwd)
         cd ..
-        ln -f "/workspace/${{ inputs.key }}" "$WORKSPACE"
+        ln -fs "/workspace/${{ inputs.key }}" "$WORKSPACE"
         echo "Linked: /workspace/${{ inputs.key }} -> $WORKSPACE"
