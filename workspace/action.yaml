@@ -1,7 +1,7 @@
 name: Load Workspace
 description: Switch to job's persistant workspace
 
-input:
+inputs:
   key:
     required: true
     type: string
@@ -12,8 +12,5 @@ runs:
     - run: |
         WORKSPACE=$(pwd)
         cd ..
-        ln -fs "/workspace/$KEY" "$WORKSPACE"
-        echo "Linked: /workspace/$KEY -> $WORKSPACE"
-      shell: bash
-      env:
-        KEY: ${{ inputs.key }}
+        ln -fs "/workspace/${{ inputs.key }}" "$WORKSPACE"
+        echo "Linked: /workspace/${{ inputs.key }} -> $WORKSPACE"
