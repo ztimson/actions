@@ -16,3 +16,4 @@ runs:
         rm -rf "$WORKSPACE"
         mkdir -p "/workspace/${{inputs.key}}"
         ln -s "/workspace/${{inputs.key}}" "$WORKSPACE"
+        echo "Linked: /workspace/${{inputs.key}} -> $WORKSPACE"
