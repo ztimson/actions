@@ -3,9 +3,8 @@ description: Switch to job's persistant workspace
 
 input:
   key:
-    type: string
     required: true
-    description: Workspace ID
+    type: string
 
 runs:
   using: composite
@@ -13,7 +12,5 @@ runs:
     - run: |
         WORKSPACE=$(pwd)
         cd ..
-        rm -rf "$WORKSPACE"
-        mkdir -p "/workspace/${{inputs.key}}"
-        ln -s "/workspace/${{inputs.key}}" "$WORKSPACE"
-        echo "Linked: /workspace/${{inputs.key}} -> $WORKSPACE"
+        ln -f "/workspace/${{ inputs.key }}" "$WORKSPACE"
+        echo "Linked: /workspace/${{ inputs.key }} -> $WORKSPACE"
