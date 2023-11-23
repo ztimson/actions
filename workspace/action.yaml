@@ -12,7 +12,9 @@ runs:
   steps:
     - run: |
         WORKSPACE=$(pwd)
-        cd ..
-        rm -rf "$WORKSPACE"
-        ln -fs "/workspace/${{ inputs.key }}" "$WORKSPACE"
-        echo "Linked: /workspace/${{ inputs.key }} -> $WORKSPACE"
+        mkdir -p "/cache/workspace/${{ inputs.key }}"
+        cd "/cache/workspace/${{ inputs.key }}"
+        # cd ..
+        # rm -rf "$WORKSPACE"
+        # ln -fs "/cache/workspace/${{ inputs.key }}" "$WORKSPACE"
+        # echo "Linked: /cache/workspace/${{ inputs.key }} -> $WORKSPACE"
