@@ -11,7 +11,7 @@ on:
             type: string
             required: false
             description: Path to NPM project root
-            default: .
+            default: ${{github.workspace}}
 
 jobs:
   docker:
