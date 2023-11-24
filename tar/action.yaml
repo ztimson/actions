@@ -1,0 +1,19 @@
+name: Tar
+desciption: Compress files into a gziped archive
+
+inputs:
+  pattern:
+    required: true
+    type: string
+  out:
+    requried: false
+    type: string
+    default: archive.tar.gz
+
+runs:
+  using: composite
+  steps:
+    - uses: docker://alpine
+      with:
+        entrypoint: tar
+        args: -czf "${{inputs.out}}" ${{inputs.pattern}}
