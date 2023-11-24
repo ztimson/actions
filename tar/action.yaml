@@ -1,4 +1,4 @@
-name: Tar
+name: Compress Archive
 desciption: Compress files into a gziped archive
 
 inputs:
