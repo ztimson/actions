@@ -24,9 +24,8 @@ on:
             default: ${{github.repository_owner}}
         pass:
             type: string
-            required: false
+            required: true
             description: User password
-            default: ${{secrets.DEPLOY_TOKEN}}
         name:
             type: string
             required: false
