@@ -36,4 +36,4 @@ runs:
       uses: docker://docker
       with:
         entrypoint: docker
-        args: login -u "${{inputs.user}}" --password "${{inputs.pass}}" "${{env.URL}}" && docker push "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
+        args: login -u "${{inputs.user}}" --password "${{inputs.pass}}" "${{env.URL}}"; docker push "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
