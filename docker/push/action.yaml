@@ -1,32 +1,25 @@
-name: Push docker image
+name: Docker Push
+description: Push docker image to registry
 
 inputs:
   registry:
+    type: string
     required: false
+    default: ${{github.server_url}}
+  name:
     type: string
-    default: $GITHUB_SERVER_URL
-  registry_user:
     required: false
-    type: string
-    default: $GITHUB_REPOSITORY_OWNER
-  registry_pass:
-    required: true
-    type: string
-  image:
-    required: false
-    type: string
-    default: $GITHUB_REPOSITORY
+    default: ${{github.repository}}
   tag:
-    required: false
     type: string
+    required: false
+    default: ${{github.ref_name}}
 
 runs:
   using: composite
-  container: docker
   steps:
-    - name: Push image
-      run: |
-        TAG=$([ -n "${{inputs.tag}}" ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g")
-        echo "${{inputs.registry_pass}}" | docker login -u "${{inputs.registry_user}}" --password-stdin "${{inputs.registry}}"
-        REG=$(echo "${{inputs.registry}}" | sed -E "s%https?://%%gi")
-        docker push "$REG/${{inputs.image}}:$TAG"
+    - name: Docker Login
+      uses: docker://docker
+      with:
+        entrypoint: docker
+        args: push "${{inputs.registry}}/${{inputs.name}}:${{inputs.tag}}"
