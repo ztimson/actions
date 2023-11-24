@@ -6,8 +6,9 @@ runs:
   steps:
     - name: Checkout repository
       run: |
-          mkdir -p /tmp/workspace && mv * /tmp/workspace/ || echo Nothing to copy
-          HOST=$(echo "${{ github.server_url }}" | sed 's%https://%%')
-          git clone -b "${{ github.ref_name  }}" "https://${{ github.token }}@$HOST/${{ github.repository }}.git" .
-          mv -n /tmp/workspace/* . && rm -rf /tmp/workspace
-          git status && echo "" && ls
+        mkdir -p /tmp/workspace && mv * /tmp/workspace/ || echo Nothing to copy
+        HOST=$(echo "${{ github.server_url }}" | sed 's%https://%%')
+        git clone -b "${{ github.ref_name  }}" "https://${{ github.token }}@$HOST/${{ github.repository }}.git" .
+        mv -n /tmp/workspace/* . && rm -rf /tmp/workspace
+        git status && echo "" && ls
+      shell: sh
