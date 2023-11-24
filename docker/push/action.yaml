@@ -1,10 +1,11 @@
-name: Docker Push
-description: Push docker image to registry
+name: Docker Login
+description: Login to Docker Registry
 
 inputs:
   registry:
     type: string
     required: false
+    description: Docker registry FQDN
     default: ${{github.server_url}}
   user:
     type: string
@@ -28,11 +29,10 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Creat Image Tag
+    - name: Format Registry URL
       run: echo "URL=$(echo ${{github.server_url}} | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
       shell: sh
-    - name: Docker Push
+    - name: Docker Login
       uses: docker://docker
       with:
-        entrypoint: docker
-        args: login -u "${{inputs.user}}" -p "${{inputs.pass}}" "${{env.URL}}" && docker push "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
+        args: /bin/sh -c "docker login -u ${{inputs.user}} -p ${{inputs.pass}} ${{env.URL}} && docker push ${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
