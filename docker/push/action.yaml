@@ -6,6 +6,16 @@ inputs:
     type: string
     required: false
     default: ${{github.server_url}}
+  user:
+    type: string
+    required: false
+    description: Docker user
+    default: ${{github.repository_owner}}
+  pass:
+    type: string
+    required: false
+    description: User password
+    default: ${{secrets.DEPLOY_TOKEN}}
   name:
     type: string
     required: false
@@ -25,4 +35,6 @@ runs:
       uses: docker://docker
       with:
         entrypoint: docker
-        args: push "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
+        args: |
+          login -u "${{inputs.user}}" --password "${{inputs.pass}}" "${{env.URL}}" && 
+          docker push "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
