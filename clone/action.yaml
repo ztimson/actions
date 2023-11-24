@@ -8,7 +8,7 @@ runs:
       run: echo "URL=$(echo ${{github.server_url}} | sed s%://%://${{github.token}}@% )/${{github.repository}}.git" >> $GITHUB_ENV
       shell: sh
     - name: Clone repository
-      uses: docker://gitlab/gitlab-runner:alpine
+      uses: docker://alpine/git
       with:
         entrypoint: git
         args: clone -b "${{github.ref_name}}" "${{env.URL}}" .
