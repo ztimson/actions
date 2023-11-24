@@ -1,7 +1,0 @@
-name: 'Clean Workspace'
-description: 'Delete everything inside workspace'
-
-runs:
-  using: "composite"
-  steps:
-    - run: rm -rf /workspace/${{github.repository}}/${{github.job}}
