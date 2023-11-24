@@ -2,6 +2,10 @@ name: Docker Build
 description: Build docker image
 
 inputs:
+  dockerfile:
+    type: string
+    required: false
+    default: Dockerfile
   registry:
     type: string
     required: false
@@ -14,10 +18,6 @@ inputs:
     type: string
     required: false
     default: ${{github.ref_name}}
-  dockerfile:
-    type: string
-    required: false
-    default: Dockerfile
 
 runs:
   using: composite
