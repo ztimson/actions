@@ -1,0 +1,16 @@
+name: Tag
+desciption: Create Git tag
+
+inputs:
+  tag:
+    type: string
+    required: true
+    description: Tag to publish
+
+runs:
+  using: composite
+  steps:
+    - uses: docker://alpine/git
+      with:
+        entrypoint: git
+        args: tag -f ${{inputs.tag}} ${{github.sha}} && git push -f origin ${{inputs.tag}}
