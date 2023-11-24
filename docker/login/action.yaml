@@ -10,10 +10,10 @@ inputs:
     type: string
     required: false
     default: ${{github.repository_owner}}
-  password:
+  pass:
     type: string
     required: false
-    default: ${{secret.DEPLOY_TOKEN}}
+    default: ${{secrets.DEPLOY_TOKEN}}
 
 runs:
   using: composite
