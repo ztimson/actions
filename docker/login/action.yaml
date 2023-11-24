@@ -9,7 +9,7 @@ inputs:
   user:
     type: string
     required: false
-    default: ${{github.owner}}
+    default: ${{github.repository_owner}}
   password:
     type: string
     required: false
@@ -25,4 +25,4 @@ runs:
       uses: docker://docker
       with:
         entrypoint: docker
-        args: login -u ${{inputs.user}} -p ${{inputs.password}} ${{env.URL}}  
+        args: login -u "${{inputs.user}}" -p "${{inputs.password}}" "${{env.URL}}"
