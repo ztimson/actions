@@ -45,5 +45,5 @@ jobs:
         if: ${{inputs.artifacts}} != ''
         uses: actions/upload-artifact@v3
         with:
-            name: ${{echo ${{inputs.artifact_name}} | sed s%/%_% }}
+            name: echo ${{inputs.artifact_name}} | sed s%/%_%
             path: ${{inputs.artifacts}}
