@@ -12,6 +12,10 @@ on:
             required: false
             description: Path to NPM project root
             default: ${{github.workspace}}
+        artifacts:
+            type: string
+            required: false
+            description: Path to any artifacts you wish uploaded
 
 jobs:
   docker:
@@ -31,3 +35,10 @@ jobs:
       - name: Install Dependencies
         run: npm run build:prod || npm run build
         working-directory: ${{inputs.path}}
+  
+      - name: Upload Artifacts
+        if: ${{inputs.artifacts}} != ''
+        uses: actions/upload-artifact@v3
+        with:
+            name: ${{inputs.artifacts}}
+            path: ${{inputs.artifacts}}
