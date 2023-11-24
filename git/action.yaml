@@ -1,11 +1,13 @@
-name: Git Checkout
-desciption: Checkout repository using alpite/git
+name: Checkout
+desciption: Git clone reposirory
 
 runs:
   using: composite
   steps:
-    - run: echo "URL=$(echo ${{github.server_url}} | sed s%://%://${{github.token}}@% )/${{github.repository}}.git" >> $GITHUB_ENV
-    - uses: docker://gitlab/gitlab-runner:alpine
+    - name: Creat authorized Git URL
+      run: echo "URL=$(echo ${{github.server_url}} | sed s%://%://${{github.token}}@% )/${{github.repository}}.git" >> $GITHUB_ENV
+    - name: Clone repository
+      uses: docker://gitlab/gitlab-runner:alpine
       with:
         entrypoint: git
         args: clone -b "${{github.ref_name}}" "${{env.URL}}" .
