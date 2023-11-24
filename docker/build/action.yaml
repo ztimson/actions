@@ -1,24 +1,29 @@
-name: Build docker image
+name: Docker Build
+description: Build docker image
 
 inputs:
   registry:
+    type: string
     required: false
+    default: ${{github.server_url}}
+  name:
     type: string
-    default: $GITHUB_SERVER_URL
-  image:
-    required: true
-    type: string
-    default: $GITHUB_REPOSITORY
+    required: false
+    default: ${{github.repository}}
   tag:
-    required: false
     type: string
+    required: false
+    default: ${{github.ref_name}}
+  dockerfile:
+    type: string
+    required: false
+    default: Dockerfile
 
 runs:
   using: composite
-  container: docker
   steps:
-    - name: Build image
-      run: |
-        TAG=$([ -n "${{inputs.tag}}" ] && echo "${{inputs.tag}}" || [ "$GITHUB_REF" == "refs/heads/develop" ] && echo "latest" || echo "$GITHUB_REF_NAME" | sed -E "s/[_/]/-/g")
-        REG=$(echo "${{inputs.registry}}" | sed -E "s%https?://%%gi")
-        docker build --no-cache -t "$REG/${{inputs.image}}:$TAG" .
+    - name: Docker Login
+      uses: docker://docker
+      with:
+        entrypoint: docker
+        args: build -t "${{inputs.registry}}/${{inputs.name}}:${{inputs.tag}}" -f ${{inputs.dockerfile}} .
