@@ -13,4 +13,4 @@ runs:
     - uses: docker://alpine
       with:
         entrypoint: tar
-        args: -xzf ${{inputs.file}}
+        args: -xzf "${{inputs.file}}"
