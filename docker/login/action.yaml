@@ -36,7 +36,7 @@ runs:
       uses: docker://docker
       with:
         entrypoint: docker
-        args: -v .:/root/.docker/ login -u "${{inputs.user}}" --password "${{inputs.pass}}" "${{env.URL}}"
+        args: -v ./:/root/.docker/ docker login -u "${{inputs.user}}" --password "${{inputs.pass}}" "${{env.URL}}"
     - name: Push
       uses: docker://docker
       with:
