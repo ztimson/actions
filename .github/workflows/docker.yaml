@@ -3,9 +3,14 @@ name: Build & Publish Dockerfile
 on:
   workflow_call:
     inputs:
+        repository:
+            type: string
+            required: true
+            description: Git repository URL
         dockerfile:
             type: string
             required: false
+            description: Name or path to Dockerfile
             default: Dockerfile
         registry:
             type: string
@@ -25,10 +30,12 @@ on:
         name:
             type: string
             required: false
+            description: Docker container name
             default: ${{github.repository}}
         tag:
             type: string
             required: false
+            description: Docker tag that will be added to image
             default: ${{github.ref_name}}
 
 jobs:
@@ -39,6 +46,8 @@ jobs:
     steps:
       - name: Clone Repository
         uses: ztimson/actions/clone@develop
+        with:
+            url: ${{inputs.repository}}
 
       - name: Build Docker Image
         uses: ztimson/actions/docker/build@develop
