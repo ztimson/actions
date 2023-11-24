@@ -16,10 +16,6 @@ on:
             type: string
             required: false
             description: Path to any artifacts you wish uploaded
-        artifact_name:
-            type: string
-            required: false
-            description: Change artifact name
 
 jobs:
   docker:
@@ -44,5 +40,5 @@ jobs:
         if: ${{inputs.artifacts}} != ''
         uses: actions/upload-artifact@v3
         with:
-            name: ${{inputs.artifact_name}} || $(echo "${{inputs.artifacts}}" | sed s%/%_%)
-            path: ${{inputs.artifacts}}
+            name: ${{ inputs.artifacts | sed s%/%_% }}
+            path: ${{ inputs.artifacts }}
