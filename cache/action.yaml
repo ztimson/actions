@@ -18,3 +18,4 @@ runs:
         mkdir -p "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}"
         tar --overwrite -czf "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz" ${{ inputs.pattern }}
         echo "Created cache: /cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
+      shell: sh
