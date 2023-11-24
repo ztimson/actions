@@ -3,6 +3,7 @@ desciption: Checkout repository using alpite/git
 
 runs:
   using: composite
+  container: git
   steps:
     - name: Checkout repository
       run: |
@@ -11,4 +12,3 @@ runs:
         git clone -b "${{ github.ref_name  }}" "https://${{ github.token }}@$HOST/${{ github.repository }}.git" .
         mv -n /tmp/workspace/* . && rm -rf /tmp/workspace
         git status && echo "" && ls
-      shell: sh
