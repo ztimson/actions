@@ -3,13 +3,13 @@ desciption: Compress and cache files for later
 
 inputs:
   key:
-    required: true
     type: string
-    default: default
+    required: false
+    default: ${{github.job_id}}
   pattern:
-    required: true
     type: string
-    default: *
+    required: false
+    default: "*"
 
 runs:
   using: composite
