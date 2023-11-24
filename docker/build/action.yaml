@@ -25,8 +25,15 @@ runs:
     - name: Creat Image Tag
       run: echo "URL=$(echo ${{github.server_url}} | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
       shell: sh
+  
     - name: Docker Build
       uses: docker://docker
       with:
         entrypoint: docker
         args: build -t "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}" -f ${{inputs.dockerfile}} .
+
+    - name: Tag as Latest
+      if: ${{inputs.tag}} != latest && ${{github.ref_name}} == (git symbolic-ref refs/remotes/origin/HEAD --short | cut -c 7)
+      with:
+        entrypoint: docker
+        args: tag "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}" "${{env.URL}}/${{inputs.name}}:latest"
