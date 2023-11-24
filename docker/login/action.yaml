@@ -5,14 +5,17 @@ inputs:
   registry:
     type: string
     required: false
+    description: Docker registry FQDN
     default: ${{github.server_url}}
   user:
     type: string
     required: false
+    description: Docker user
     default: ${{github.repository_owner}}
   pass:
     type: string
     required: false
+    description: User password
     default: ${{secrets.DEPLOY_TOKEN}}
 
 runs:
@@ -21,10 +24,10 @@ runs:
     - name: Creat Image Tag
       run: echo "URL=$(echo ${{github.server_url}} | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
       shell: sh
-    - run: echo docker login -u "${{inputs.user}}" --password "${{inputs.password}}" "${{env.URL}}"
+    - run: echo docker login -u "${{inputs.user}}" --password "${{inputs.pass}}" "${{env.URL}}"
       shell: sh
     - name: Docker Login
       uses: docker://docker
       with:
         entrypoint: docker
-        args: login -u "${{inputs.user}}" --password "${{inputs.password}}" "${{env.URL}}"
+        args: login -u "${{inputs.user}}" --password "${{inputs.pass}}" "${{env.URL}}"
