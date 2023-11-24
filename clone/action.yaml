@@ -7,8 +7,6 @@ inputs:
     required: false
     description: Repository URL that will be cloned
     default: ${{github.server_url}}/${{github.repository}}.git
-
-secrets:
   token:
     type: string
     required: false
@@ -19,7 +17,7 @@ runs:
   using: composite
   steps:
     - name: Creat authorized Git URL
-      run: echo "URL=$(echo ${{inputs.url}} | sed s%://%://${{secrets.token}}@% )" >> $GITHUB_ENV
+      run: echo "URL=$(echo ${{inputs.url}} | sed s%://%://${{inputs.token}}@% )" >> $GITHUB_ENV
       shell: sh
     - name: Clone repository
       uses: docker://alpine/git
