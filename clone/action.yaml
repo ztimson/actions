@@ -1,11 +1,25 @@
 name: Checkout
 desciption: Git clone reposirory
 
+inputs:
+  url:
+    type: string
+    required: false
+    description: Repository URL that will be cloned
+    default: ${{github.server_url}}/${{github.repository}}.git
+
+secrets:
+  token:
+    type: string
+    required: false
+    description: Authentication token
+    default: ${{github.token}}
+
 runs:
   using: composite
   steps:
     - name: Creat authorized Git URL
-      run: echo "URL=$(echo ${{github.server_url}} | sed s%://%://${{github.token}}@% )/${{github.repository}}.git" >> $GITHUB_ENV
+      run: echo "URL=$(echo ${{inputs.url}} | sed s%://%://${{secrets.token}}@% )" >> $GITHUB_ENV
       shell: sh
     - name: Clone repository
       uses: docker://alpine/git
