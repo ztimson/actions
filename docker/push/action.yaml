@@ -18,7 +18,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Docker Login
+    - name: Docker Push
       uses: docker://docker
       with:
         entrypoint: docker
