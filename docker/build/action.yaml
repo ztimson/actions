@@ -22,8 +22,11 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Creat Image Tag
+      run: echo "URL=$(echo ${{github.server_url}} | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
+      shell: sh
     - name: Docker Build
       uses: docker://docker
       with:
         entrypoint: docker
-        args: build -t "${{inputs.registry}}/${{inputs.name}}:${{inputs.tag}}" -f ${{inputs.dockerfile}} .
+        args: build -t "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}" -f ${{inputs.dockerfile}} .
