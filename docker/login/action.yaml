@@ -17,14 +17,20 @@ inputs:
     required: false
     description: User password
     default: ${{secrets.DEPLOY_TOKEN}}
+  name:
+    type: string
+    required: false
+    default: ${{github.repository}}
+  tag:
+    type: string
+    required: false
+    default: ${{github.ref_name}}
 
 runs:
   using: composite
   steps:
     - name: Creat Image Tag
       run: echo "URL=$(echo ${{github.server_url}} | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
-      shell: sh
-    - run: echo docker login -u "${{inputs.user}}" --password "${{inputs.pass}}" "${{env.URL}}"
       shell: sh
     - name: Docker Login
       uses: docker://docker
