@@ -35,10 +35,4 @@ runs:
     - name: Docker Login
       uses: docker://docker
       with:
-        entrypoint: docker
-        args: -v ./:/root/.docker/ docker login -u "${{inputs.user}}" --password "${{inputs.pass}}" "${{env.URL}}"
-    - name: Push
-      uses: docker://docker
-      with:
-        entrypoint: docker
-        args: -v .:/root/.docker/ push "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
+        args: /bin/sh -c "docker login -u ${{inputs.user}} -p ${{inputs.pass}} ${{env.URL}} && docker push ${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
