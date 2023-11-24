@@ -8,7 +8,7 @@ runs:
       container: git
       options: -v ".:/app"
       run: |
-        cd /app
+        mkdir -p /app && cd /app
         mkdir -p /tmp/workspace && mv * /tmp/workspace/ || echo Nothing to copy
         HOST=$(echo "${{ github.server_url }}" | sed 's%https://%%')
         git clone -b "${{ github.ref_name  }}" "https://${{ github.token }}@$HOST/${{ github.repository }}.git" .
