@@ -21,8 +21,10 @@ runs:
     - name: Creat Image Tag
       run: echo "URL=$(echo ${{github.server_url}} | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
       shell: sh
+    - run: echo docker login -u "${{inputs.user}}" --password "${{inputs.password}}" "${{env.URL}}"
+      shell: sh
     - name: Docker Login
       uses: docker://docker
       with:
         entrypoint: docker
-        args: login -u "${{inputs.user}}" -p "${{inputs.password}}" "${{env.URL}}"
+        args: login -u "${{inputs.user}}" --password "${{inputs.password}}" "${{env.URL}}"
