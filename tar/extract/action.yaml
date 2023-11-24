@@ -1,0 +1,16 @@
+name: Extract Archive
+desciption: Extract files from gziped archive
+
+inputs:
+  file:
+    requried: false
+    type: string
+    default: archive.tar.gz
+
+runs:
+  using: composite
+  steps:
+    - uses: docker://alpine
+      with:
+        entrypoint: tar
+        args: -xzf ${{inputs.file}}
