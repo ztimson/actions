@@ -3,14 +3,15 @@ desciption: Restore cached files
 
 inputs:
   key:
-    required: true
     type: string
-    default: default
+    required: false
+    default: ${{github.job_id}}
 
 runs:
   using: composite
   steps:
-    - run: |
+    - name: Create cache
+      run: |
         [ ! -f "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz" ] && echo "Cache not found" && exit
         tar --overwrite -xzf "/cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
-        echo "Cache restored: /cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"
+        echo "Cache restored: /cache/$GITHUB_REPOSITORY/${{ inputs.key }}/archive.tar.gz"    
