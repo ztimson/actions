@@ -40,10 +40,14 @@ jobs:
       - name: Install Dependencies
         run: npm run build:prod || npm run build
         working-directory: ${{inputs.path}}
+      
+      - name: Artifact Name
+        if: ${{inputs.artifacts}} != ''
+        run: echo "ARTIFACTS=$(echo ${{inputs.artifact_name}} | sed s%/%_% )" >> $GITHUB_ENV
   
       - name: Upload Artifacts
-        if: ${{inputs.artifacts}} != ''
+        if: ${{env.ARTIFACTS}} != ''
         uses: actions/upload-artifact@v3
         with:
-            name: echo ${{inputs.artifact_name}} | sed s%/%_%
+            name: ${{env.ARTIFACTS}}
             path: ${{inputs.artifacts}}
