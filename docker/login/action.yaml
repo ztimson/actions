@@ -1,0 +1,25 @@
+name: Docker Login
+description: Login to Docker Registry
+
+inputs:
+  registry:
+    type: string
+    required: false
+    default: ${{github.server_url}}
+  user:
+    type: string
+    required: false
+    default: ${{github.owner}}
+  password:
+    type: string
+    required: false
+    default: ${{secret.DEPLOY_TOKEN}}
+
+runs:
+  using: composite
+  steps:
+    - name: Docker Login
+      uses: docker://docker
+      with:
+        entrypoint: docker
+        args: login -u ${{inputs.user}} -p ${{inputs.password}} ${{inputs.registry}}  
