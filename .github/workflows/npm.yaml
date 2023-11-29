@@ -16,6 +16,7 @@ on:
             type: string
             required: false
             description: Path to any artifacts you wish uploaded
+            default: ''
         artifact_name:
             type: string
             required: false
@@ -46,7 +47,7 @@ jobs:
         run: echo "ARTIFACTS=$(echo ${{inputs.artifact_name}} | sed s%/%_% )" >> $GITHUB_ENV
   
       - name: Upload Artifacts
-        if: ${{env.ARTIFACTS}} != ''
+        if: ${{inputs.artifacts}} != ''
         uses: actions/upload-artifact@v3
         with:
             name: ${{env.ARTIFACTS}}
