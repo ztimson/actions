@@ -10,7 +10,14 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: docker://alpine/git
+    - name: Create Tag
+      uses: docker://alpine/git
       with:
         entrypoint: git
-        args: tag -f ${{inputs.tag}} ${{github.sha}} && git push -f origin ${{inputs.tag}}
+        args: tag -f ${{inputs.tag}} ${{github.sha}}
+  
+    - name: Push Tag
+      uses: docker://alpine/git
+      with:
+        entrypoint: git
+        args: push -f origin ${{inputs.tag}}
