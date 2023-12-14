@@ -1,5 +1,5 @@
-name: Docker Login
-description: Login to Docker Registry
+name: Docker Push
+description: Push Image to Registry
 
 inputs:
   registry:
