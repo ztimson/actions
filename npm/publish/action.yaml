@@ -1,0 +1,33 @@
+name: NPM Publish
+description: Push to registry
+
+inputs:
+  registry:
+    type: string
+    required: false
+    description: NPM registry FQDM
+    default: ${{github.server_url}}
+  owner:
+    type: string
+    required: false
+    description: Owner to publish to
+    default: ${{github.repository_owner}}
+  token:
+    type: string
+    required: false
+    description: Access Token
+    default: ${{secrets.DEPLOY_TOKEN}}
+
+runs:
+  using: composite
+  steps:
+    - name: Setup registry
+      run: |
+        echo "_authToken=${{inputs.token}}" > .npmrc
+        echo "registry=${{inputs.registry}}/api/packages/${{inputs.owner}}/npm/" >> .npmrc
+      shell: sh
+
+    - name: Publish
+      uses: docker://node
+      with:
+        args: /bin/sh -c "npm publish"
