@@ -2,16 +2,16 @@ name: NPM Publish
 description: Push to registry
 
 inputs:
-  registry:
-    type: string
-    required: false
-    description: NPM registry FQDM
-    default: ${{github.server_url}}
   owner:
     type: string
     required: false
     description: Owner to publish to
     default: ${{github.repository_owner}}
+  registry:
+    type: string
+    required: false
+    description: NPM registry FQDM
+    default: ${{github.server_url}}/api/packages/${{inputs.owner}}/npm/
   token:
     type: string
     required: false
@@ -31,7 +31,7 @@ runs:
         if [ "${{github.ref_name}}" == "${{inputs.branch}}" ]; then
           TRIMMED=$(echo "${{inputs.registry}}" | sed s%http:%% | sed s%https:%%)
           echo "_authToken=${{inputs.token}}" > .npmrc
-          echo "registry=$TRIMMED/api/packages/${{inputs.owner}}/npm/" >> .npmrc
+          echo "registry=${{inputs.registry}}" >> .npmrc
         fi
       shell: sh
 
