@@ -17,19 +17,25 @@ inputs:
     required: false
     description: Access Token
     default: ${{secrets.DEPLOY_TOKEN}}
+  branch:
+    type: string
+    required: false
+    description: Only publish for branch
+    default: develop
 
 runs:
   using: composite
   steps:
     - name: Setup registry
       run: |
-        if [ "${{github.ref_name}}" == "develop" ]; then
+        if [ "${{github.ref_name}}" == "${{inputs.branch}}" ]; then
+          TRIMMED=$(echo "${{inputs.registry}}" | sed s%http:%% | sed s%https:%%)
           echo "_authToken=${{inputs.token}}" > .npmrc
-          echo "registry=${{inputs.registry}}/api/packages/${{inputs.owner}}/npm/" >> .npmrc
+          echo "registry=$TRIMMED/api/packages/${{inputs.owner}}/npm/" >> .npmrc
         fi
       shell: sh
 
     - name: Publish
       uses: docker://node
       with:
-        args: /bin/sh -c "npm publish"
+        args: /bin/sh -c "[ \"${{github.ref_name}}\" == \"${{inputs.branch}}\" ] && npm publish"
