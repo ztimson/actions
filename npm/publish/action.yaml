@@ -23,8 +23,10 @@ runs:
   steps:
     - name: Setup registry
       run: |
-        echo "_authToken=${{inputs.token}}" > .npmrc
-        echo "registry=${{inputs.registry}}/api/packages/${{inputs.owner}}/npm/" >> .npmrc
+        if [ "${{github.ref_name}}" == "develop" ] then;
+          echo "_authToken=${{inputs.token}}" > .npmrc
+          echo "registry=${{inputs.registry}}/api/packages/${{inputs.owner}}/npm/" >> .npmrc
+        fi
       shell: sh
 
     - name: Publish
