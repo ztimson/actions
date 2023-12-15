@@ -23,7 +23,7 @@ runs:
   steps:
     - name: Setup registry
       run: |
-        if [ "${{github.ref_name}}" == "develop" ] then;
+        if [ "${{github.ref_name}}" == "develop" ]; then
           echo "_authToken=${{inputs.token}}" > .npmrc
           echo "registry=${{inputs.registry}}/api/packages/${{inputs.owner}}/npm/" >> .npmrc
         fi
