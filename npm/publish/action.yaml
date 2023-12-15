@@ -36,6 +36,7 @@ runs:
       shell: sh
 
     - name: Publish
+      if: ${{github.ref_name}} == ${{inputs.branch}}
       uses: docker://node
       with:
-        args: /bin/bash -c "[[ ${{github.ref_name}} == ${{inputs.branch}} ]] && npm publish"
+        args: /bin/bash -c "npm publish"
