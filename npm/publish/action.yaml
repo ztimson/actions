@@ -32,6 +32,7 @@ runs:
           TRIMMED=$(echo "${{inputs.registry}}" | sed s%http:%% | sed s%https:%%)
           echo "_authToken=${{inputs.token}}" > .npmrc
           echo "registry=${{inputs.registry}}" >> .npmrc
+          npm publish
         fi
       shell: sh
 
@@ -39,4 +40,4 @@ runs:
       if: ${{github.ref_name}} == ${{inputs.branch}}
       uses: docker://node
       with:
-        args: /bin/bash -c "npm publish"
+        args: /bin/bash -c 'echo "_authToken=${{inputs.token}}" > .npmrc && echo "registry=${{inputs.registry}}" >> .npmrc && npm publish'
