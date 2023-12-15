@@ -30,4 +30,4 @@ runs:
       if: ${{github.ref_name}} == ${{inputs.branch}}
       uses: docker://node
       with:
-        args: /bin/bash -c 'npm config set registry ${{inputs.registry}} && npm config set -- ${{inputs.registry}}:_authToken ${{inputs.token}} && npm publish'
+        args: /bin/bash -c 'npm config set registry ${{inputs.registry}} && npm config set -- $(echo ${{inputs.registry}} | sed s%http:%% | sed s%https:%% ):_authToken "${{inputs.token}}" && npm publish'
