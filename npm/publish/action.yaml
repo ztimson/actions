@@ -38,4 +38,4 @@ runs:
     - name: Publish
       uses: docker://node
       with:
-        args: /bin/sh -c "[ \"${{github.ref_name}}\" == \"${{inputs.branch}}\" ] && npm publish"
+        args: /bin/bash -c "[[ \"${{github.ref_name}}\" == \"${{inputs.branch}}\" ]] && npm publish"
