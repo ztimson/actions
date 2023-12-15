@@ -26,18 +26,8 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Setup registry
-      run: |
-        if [ "${{github.ref_name}}" == "${{inputs.branch}}" ]; then
-          TRIMMED=$(echo "${{inputs.registry}}" | sed s%http:%% | sed s%https:%%)
-          echo "_authToken=${{inputs.token}}" > .npmrc
-          echo "registry=${{inputs.registry}}" >> .npmrc
-          npm publish
-        fi
-      shell: sh
-
     - name: Publish
       if: ${{github.ref_name}} == ${{inputs.branch}}
       uses: docker://node
       with:
-        args: /bin/bash -c 'echo "_authToken=${{inputs.token}}" > .npmrc && echo "registry=${{inputs.registry}}" >> .npmrc && npm publish'
+        args: /bin/bash -c 'npm config set registry ${{inputs.registry}} && npm config set -- ${{inputs.registry}}:_authToken ${{inputs.token}} && npm publish'
