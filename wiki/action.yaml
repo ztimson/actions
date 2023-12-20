@@ -32,7 +32,7 @@ runs:
                 args: clone "${{env.URL}}" wiki
 
         -   name: Update files
-            run: mv -f ${{inputs.pattern}} wiki/
+            run: mv -f ${{inputs.pattern}}/* wiki/
             shell: sh
         
         -   name: Push
