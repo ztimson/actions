@@ -38,5 +38,5 @@ runs:
         -   name: Push
             uses: docker://alpine/git
             with:
-                entrypoint: git
-                args: /bin/sh -c "cd wiki && git add . && git commit -m Automated wiki update && git push"
+                entrypoint: /bin/sh
+                args: -c "cd wiki && git add . && git commit -m Automated wiki update && git push"
