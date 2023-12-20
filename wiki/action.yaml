@@ -39,4 +39,4 @@ runs:
             uses: docker://alpine/git
             with:
                 entrypoint: git
-                args: sh -c "cd wiki && git add . && git commit -m Automated wiki update && git push"
+                args: /bin/sh -c "cd wiki && git add . && git commit -m Automated wiki update && git push"
