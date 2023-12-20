@@ -5,7 +5,8 @@ inputs:
   key:
     type: string
     required: false
-    default: ${{github.job_id}}
+    description: Key to store cache under
+    default: ${{github.run_id}}
 
 runs:
   using: composite
