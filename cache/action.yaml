@@ -5,10 +5,12 @@ inputs:
   key:
     type: string
     required: false
-    default: ${{github.job_id}}
+    description: Key to store cache under
+    default: ${{github.run_id}}
   pattern:
     type: string
     required: false
+    description: Files that will be cached
     default: "*"
 
 runs:
