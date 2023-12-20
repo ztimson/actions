@@ -2,41 +2,41 @@ name: Publish Wiki
 desciption: Publish Wiki
 
 inputs:
-  url:
-    type: string
-    required: false
-    description: Repository URL that will be cloned
-    default: ${{github.server_url}}/${{github.repository}}.wiki.git
-  token:
-    type: string
-    required: false
-    description: Authentication token
-    default: ${{github.token}}
-  pattern:
-    type: string
-    required: false
-    description: Directory to upload to wiki
-    default: docs
+    url:
+        type: string
+        required: false
+        description: Repository URL that will be cloned
+        default: ${{github.server_url}}/${{github.repository}}.wiki.git
+    token:
+        type: string
+        required: false
+        description: Authentication token
+        default: ${{github.token}}
+    pattern:
+        type: string
+        required: false
+        description: Directory to upload to wiki
+        default: docs
 
 runs:
-  using: composite
-  steps:
-    - name: Creat authorized Git URL
-      run: echo "URL=$(echo ${{inputs.url}} | sed s%://%://${{inputs.token}}@% )" >> $GITHUB_ENV
-      shell: sh
+    using: composite
+    steps:
+        -   name: Creat authorized Git URL
+            run: echo "URL=$(echo ${{inputs.url}} | sed s%://%://${{inputs.token}}@% )" >> $GITHUB_ENV
+            shell: sh
 
-    - name: Clone repository
-      uses: docker://alpine/git
-      with:
-        entrypoint: git
-        args: clone "${{env.URL}}" wiki
-    
-    - name: Update files
-      run: mv -f ${{inputs.pattern}} wiki/
-      shell: sh
-    
-    = name: Push
-      uses: docker://alpine/git
-      with:
-        entrypoint: git
-        args: sh -c "cd wiki && git add . && git commit -m Automated wiki update && git push"
+        -   name: Clone repository
+            uses: docker://alpine/git
+            with:
+                entrypoint: git
+                args: clone "${{env.URL}}" wiki
+
+        -   name: Update files
+            run: mv -f ${{inputs.pattern}} wiki/
+            shell: sh
+        
+        -   name: Push
+            uses: docker://alpine/git
+            with:
+                entrypoint: git
+                args: sh -c "cd wiki && git add . && git commit -m Automated wiki update && git push"
