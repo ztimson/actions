@@ -47,6 +47,9 @@ jobs:
         uses: ztimson/actions/clone@develop
         with:
             url: ${{inputs.repository}}
+      
+      - name: Get Version Number
+        run: [[ -f package.json ]] && echo "VERSION=$(cat package.json | grep version | grep -Eo ':.+' | grep -Eo '[[:alnum:]\.\/\-]+')" >> $GITHUB_ENV
 
       - name: Build Docker Image
         uses: ztimson/actions/docker/build@develop
@@ -56,7 +59,7 @@ jobs:
             tag: ${{inputs.tag}}
             dockerfile: ${{inputs.dockerfile}}
 
-      - name: Push Docker Image
+      - name: Push as ${{inputs.tag}}
         uses: ztimson/actions/docker/push@develop
         with:
             registry: ${{inputs.registry}}
@@ -65,10 +68,22 @@ jobs:
             name: ${{inputs.name}}
             tag: ${{inputs.tag}}
      
-      - name: Tag as Latest
+      - name: Push as ${{env.VERSION}}
+        uses: ztimson/actions/docker/push@develop
+        if: ${{env.VERSION}}
+        with:
+            from: "${{inputs.registry}}/${{inputs.name}}/${{inputs.tag}}"
+            registry: ${{inputs.registry}}
+            user: ${{inputs.user}}
+            pass: ${{inputs.pass}}
+            name: ${{inputs.name}}
+            tag: ${{env.VERSION}}
+
+      - name: Push as Latest
         uses: ztimson/actions/docker/push@develop
         if: ${{inputs.tag}} != latest && ${{github.ref_name}} == (git symbolic-ref refs/remotes/origin/HEAD --short | cut -c 7)
         with:
+            from: "${{inputs.registry}}/${{inputs.name}}/${{inputs.tag}}"
             registry: ${{inputs.registry}}
             user: ${{inputs.user}}
             pass: ${{inputs.pass}}
