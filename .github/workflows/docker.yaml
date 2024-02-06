@@ -51,6 +51,7 @@ jobs:
       - name: Get Version Number
         run: |
           [[ -f package.json ]] && echo "VERSION=$(cat package.json | grep version | grep -Eo ':.+' | grep -Eo '[[:alnum:]\.\/\-]+')" >> $GITHUB_ENV
+        shell: sh
 
       - name: Build Docker Image
         uses: ztimson/actions/docker/build@develop
