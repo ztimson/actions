@@ -38,8 +38,9 @@ runs:
       run: echo "URL=$(echo ${{github.server_url}} | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
       shell: sh
 
-    - name: Re-Tag
-      run: [ -n ${{inputs.from}} ] && docker tag ${{inputs.from}} "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
+    - name: Tag Image
+      run: |
+        [[ -n ${{inputs.from}} ]] && docker tag ${{inputs.from}} "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
       shell: sh
 
     - name: Docker Login
