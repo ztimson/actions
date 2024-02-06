@@ -2,6 +2,11 @@ name: Docker Push
 description: Push Image to Registry
 
 inputs:
+  from:
+    type: string
+    required: false
+    description: Re-tag an existing image
+    default: false
   registry:
     type: string
     required: false
@@ -25,11 +30,6 @@ inputs:
     type: string
     required: false
     default: ${{github.ref_name}}
-  from:
-    type: string
-    required: false
-    description: Re-tag an existing image
-    default: 
 
 runs:
   using: composite
@@ -40,7 +40,7 @@ runs:
 
     - name: Tag Image
       run: |
-        [[ -n ${{inputs.from}} ]] && docker tag ${{inputs.from}} "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
+        [[ "${{inputs.from}}" != "false" ]] && docker tag "${{inputs.from}}" "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
       shell: sh
 
     - name: Docker Login
