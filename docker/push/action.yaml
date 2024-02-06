@@ -40,7 +40,7 @@ runs:
 
     - name: Tag Image
       run: |
-        [[ "${{inputs.from}}" != "false" ]] && docker tag "${{inputs.from}}" "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
+        [[ "${{inputs.from}}" != "false" ]] && docker tag "${{inputs.from}}" "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}" || echo "Skipping tagging"
       shell: sh
 
     - name: Docker Login
