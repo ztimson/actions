@@ -74,7 +74,7 @@ jobs:
         uses: ztimson/actions/docker/push@develop
         if: ${{env.VERSION}}
         with:
-            from: "${{inputs.registry}}/${{inputs.name}}/${{inputs.tag}}"
+            from: "${{inputs.registry}}/${{inputs.name}}:${{inputs.tag}}"
             registry: ${{inputs.registry}}
             user: ${{inputs.user}}
             pass: ${{inputs.pass}}
@@ -85,7 +85,7 @@ jobs:
         uses: ztimson/actions/docker/push@develop
         if: ${{inputs.tag}} != latest && ${{github.ref_name}} == (git symbolic-ref refs/remotes/origin/HEAD --short | cut -c 7)
         with:
-            from: "${{inputs.registry}}/${{inputs.name}}/${{inputs.tag}}"
+            from: "${{inputs.registry}}/${{inputs.name}}:${{inputs.tag}}"
             registry: ${{inputs.registry}}
             user: ${{inputs.user}}
             pass: ${{inputs.pass}}
