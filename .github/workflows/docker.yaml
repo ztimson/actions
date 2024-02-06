@@ -47,7 +47,7 @@ jobs:
         uses: ztimson/actions/clone@develop
         with:
             url: ${{inputs.repository}}
-      
+
       - name: Get Version Number
         run: [[ -f package.json ]] && echo "VERSION=$(cat package.json | grep version | grep -Eo ':.+' | grep -Eo '[[:alnum:]\.\/\-]+')" >> $GITHUB_ENV
 
@@ -67,7 +67,7 @@ jobs:
             pass: ${{inputs.pass}}
             name: ${{inputs.name}}
             tag: ${{inputs.tag}}
-     
+
       - name: Push as ${{env.VERSION}}
         uses: ztimson/actions/docker/push@develop
         if: ${{env.VERSION}}
