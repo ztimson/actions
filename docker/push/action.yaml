@@ -25,6 +25,11 @@ inputs:
     type: string
     required: false
     default: ${{github.ref_name}}
+  from:
+    type: string
+    required: false
+    description: Re-tag an existing image
+    default: 
 
 runs:
   using: composite
@@ -32,6 +37,11 @@ runs:
     - name: Format Registry URL
       run: echo "URL=$(echo ${{github.server_url}} | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
       shell: sh
+
+    - name: Re-Tag
+      run: [ -n ${{inputs.from}} ] && docker tag ${{inputs.from}} "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
+      shell: sh
+
     - name: Docker Login
       uses: docker://docker
       with:
