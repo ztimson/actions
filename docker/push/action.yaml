@@ -35,12 +35,14 @@ runs:
   using: composite
   steps:
     - name: Format Registry URL
-      run: echo "URL=$(echo ${{github.server_url}} | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
+      run: |
+        echo "URL=$(echo ${{github.server_url}} | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
+        echo "FROM=$(echo "${{inputs.from}}" | sed s%http://%% | sed s%https://%% )" >> $GITHUB_ENV
       shell: sh
 
     - name: Tag Image
       run: |
-        [[ "${{inputs.from}}" != "false" ]] && docker tag "${{inputs.from}}" "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}" || echo "Skipping tagging"
+        [[ "${{env.FROM}}" == "false" ]] && echo "Skipping..." || docker tag "${{env.FROM}}" "${{env.URL}}/${{inputs.name}}:${{inputs.tag}}"
       shell: sh
 
     - name: Docker Login
