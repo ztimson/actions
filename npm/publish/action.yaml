@@ -22,6 +22,11 @@ inputs:
     required: false
     description: Only publish for branch
     default: develop
+  working-directory:
+    type: string
+    requried: false
+    description: Run from path
+    default: .
 
 runs:
   using: composite
@@ -30,4 +35,4 @@ runs:
       if: ${{github.ref_name}} == ${{inputs.branch}}
       uses: docker://node
       with:
-        args: /bin/bash -c 'npm set registry ${{inputs.registry}} && npm set $(echo ${{inputs.registry}} | sed s%http:%% | sed s%https:%% ):_authToken "${{inputs.token}}" && npm publish || echo Already published...'
+        args: /bin/bash -c 'cd ${{inputs.working-directory}} && npm set registry ${{inputs.registry}} && npm set $(echo ${{inputs.registry}} | sed s%http:%% | sed s%https:%% ):_authToken "${{inputs.token}}" && npm publish || echo Already published...'
