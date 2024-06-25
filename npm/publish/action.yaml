@@ -22,6 +22,11 @@ inputs:
     required: false
     description: Only publish for branch
     default: develop
+  binary:
+    type: string
+    required: false
+    description: Which NPM/Yarn/Bun executable to use
+    default: npm
   working-directory:
     type: string
     requried: false
@@ -35,4 +40,4 @@ runs:
       if: ${{github.ref_name}} == ${{inputs.branch}}
       uses: docker://node
       with:
-        args: /bin/bash -c 'cd ${{inputs.working-directory}} && npm set registry ${{inputs.registry}} && npm set $(echo ${{inputs.registry}} | sed s%http:%% | sed s%https:%% ):_authToken "${{inputs.token}}" && npm publish || echo Already published...'
+        args: /bin/bash -c 'cd ${{inputs.working-directory}} && ${{inputs.binary}} set registry ${{inputs.registry}} && ${{inputs.binary}} set $(echo ${{inputs.registry}} | sed s%http:%% | sed s%https:%% ):_authToken "${{inputs.token}}" && ${{inputs.binary}} publish || echo Already published...'
