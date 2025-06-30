@@ -22,5 +22,5 @@ runs:
     - name: Clone repository
       uses: docker://alpine/git
       with:
-        entrypoint: bash
+        entrypoint: sh
         args: git clone -b "${{github.ref_name}}" "${{env.URL}}" . && git submodule update --init --recursive
