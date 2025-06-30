@@ -19,8 +19,15 @@ runs:
     - name: Creat authorized Git URL
       run: echo "URL=$(echo ${{inputs.url}} | sed s%://%://${{inputs.token}}@% )" >> $GITHUB_ENV
       shell: sh
+
     - name: Clone repository
       uses: docker://alpine/git
       with:
-        entrypoint: sh
-        args: git clone -b "${{github.ref_name}}" "${{env.URL}}" . && git submodule update --init --recursive
+        entrypoint: git
+        args: clone -b "${{github.ref_name}}" "${{env.URL}}" .
+
+    - name: Clone submodules
+      uses: docker://alpine/git
+      with:
+        entrypoint: git
+        args: submodule update --init --recursive
